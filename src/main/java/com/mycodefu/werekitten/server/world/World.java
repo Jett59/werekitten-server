@@ -4,6 +4,7 @@ import com.mycodefu.werekitten.server.netty.NettyServer;
 import com.mycodefu.werekitten.server.netty.NettyServerHandler;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.ChannelId;
 
 public class World implements NettyServerHandler.ServerConnectionCallback{
@@ -38,7 +39,9 @@ public void serverConnectionMessage(ChannelId id, String sourceIpAddress, ByteBu
 @Override
 public void serverConnectionClosed(ChannelId id) {
 	if(players[0] == id) {
-		server.close();
+		if(players[1] != null) {
+			server.sendMessage(players[1], ByteBufAllocator.DEFAULT.buffer(1).writeByte(-1));
+		}
 	}else {
 		players[1] = null;
 	}
