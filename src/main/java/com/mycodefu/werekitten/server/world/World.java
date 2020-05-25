@@ -20,8 +20,10 @@ public World(NettyServer server) {
 public void serverConnectionOpened(ChannelId id, String remoteAddress) {
 	if(players[0] == null) {
 		players[0] = id;
+		System.out.println("world added host");
 	}else if(players[1] == null) {
 		players[1] = id;
+		System.out.println("second player joined world");
 	}else {
 		throw new IllegalStateException("only two players are supported at a time");
 	}

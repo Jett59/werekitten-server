@@ -20,10 +20,6 @@ private Map<ChannelId, AtomicBoolean> channelToHasJoinedWorld = new HashMap<>();
 private Map<ChannelId, World> channelToWorld = new HashMap<>();
 private Map<String, World> hostNameToWorld = new HashMap<>();
 
-public WorldManager(NettyServer server) {
-	this.server = server;
-}
-
 	@Override
 	public void serverConnectionOpened(ChannelId id, String remoteAddress) {
 		channelToHasJoinedWorld.put(id, new AtomicBoolean(false));
@@ -34,17 +30,19 @@ private byte[] bytes;
 
 	@Override
 	public void serverConnectionMessage(ChannelId id, String sourceIpAddress, ByteBuf message) {
-		if(channelToHasJoinedWorld.get(id).get()) {
+		if(!channelToHasJoinedWorld.get(id).get()) {
 		if(message.getByte(0) == 0) {
 			nextWorld = new World(server);
 			bytes = new byte[message.getByte(1)];
 			message.getBytes(2, bytes);
 			String hostName = new String(bytes, CharsetUtil.UTF_8);
 			nextWorld.setHost(hostName);
+			nextWorld.serverConnectionOpened(id, sourceIpAddress);
 			worlds.add(nextWorld);
 			channelToHasJoinedWorld.get(id).set(true);
 			channelToWorld.put(id, nextWorld);
 			hostNameToWorld.put(hostName, nextWorld);
+			System.out.printf("%s hosting world\n", hostName);
 		}else if(message.getByte(0) == 1) {
 			bytes = new byte[message.getByte(1)];
 			message.getBytes(2, bytes);
@@ -52,6 +50,7 @@ private byte[] bytes;
 			hostNameToWorld.get(hostName).serverConnectionOpened(id, sourceIpAddress);
 			channelToHasJoinedWorld.get(id).set(true);
 			channelToWorld.put(id, hostNameToWorld.get(hostName));
+			System.out.println("player joining world");
 		}else {
 			throw new IllegalArgumentException("unknown message passed by connection "+sourceIpAddress);
 		}
@@ -69,4 +68,8 @@ private byte[] bytes;
 		channelToWorld.remove(id);
 		channelToHasJoinedWorld.remove(id);
 	}
+
+public void setServer(NettyServer server) {
+	this.server = server;
+}
 }
