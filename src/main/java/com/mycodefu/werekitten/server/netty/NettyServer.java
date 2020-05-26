@@ -15,10 +15,12 @@ import io.netty.handler.address.DynamicAddressConnectHandler;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
+import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketServerCompressionHandler;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
+import io.netty.util.CharsetUtil;
 import io.netty.util.concurrent.DefaultEventExecutor;
 
 import java.net.InetSocketAddress;
@@ -89,7 +91,10 @@ public class NettyServer {
     public void sendMessage(ChannelId id, ByteBuf message) {
         Channel channel = allChannels.find(id);
         if (channel != null) {
-            WebSocketFrame frame = new BinaryWebSocketFrame(message);
+        	System.out.println(message.readableBytes());
+        	String messageString = message.toString(CharsetUtil.UTF_8);
+        	System.out.printf("Message to send: %s\n", messageString);
+            WebSocketFrame frame = new TextWebSocketFrame(messageString);
             channel.writeAndFlush(frame);
         }
     }

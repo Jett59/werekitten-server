@@ -32,8 +32,10 @@ public void serverConnectionOpened(ChannelId id, String remoteAddress) {
 @Override
 public void serverConnectionMessage(ChannelId id, String sourceIpAddress, ByteBuf message) {
 	if(players[0] == id) {
+		System.out.println("message sent from host to player 2");
 		server.sendMessage(players[1], message);
 	}else {
+		System.out.println("message sent from player 2 to host");
 		server.sendMessage(players[0], message);
 	}
 }

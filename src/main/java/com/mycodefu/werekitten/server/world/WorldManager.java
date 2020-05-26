@@ -31,7 +31,7 @@ private byte[] bytes;
 	@Override
 	public void serverConnectionMessage(ChannelId id, String sourceIpAddress, ByteBuf message) {
 		if(!channelToHasJoinedWorld.get(id).get()) {
-		if(message.getByte(0) == 0) {
+		if(message.getByte(0) == 65) {
 			nextWorld = new World(server);
 			bytes = new byte[message.getByte(1)];
 			message.getBytes(2, bytes);
@@ -43,7 +43,8 @@ private byte[] bytes;
 			channelToWorld.put(id, nextWorld);
 			hostNameToWorld.put(hostName, nextWorld);
 			System.out.printf("%s hosting world\n", hostName);
-		}else if(message.getByte(0) == 1) {
+		}else if(message.getByte(0) == 66) {
+			System.out.println(message.readableBytes());
 			bytes = new byte[message.getByte(1)];
 			message.getBytes(2, bytes);
 			String hostName = new String(bytes, CharsetUtil.UTF_8);
