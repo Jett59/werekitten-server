@@ -1,4 +1,5 @@
-version: 2.1
+{
+"version": 2.1
 
 "build": {
   "jobs": {
@@ -10,4 +11,8 @@ version: 2.1
       "run: mvn package"
     ]
       }
-      }
+      },
+"workflows": [
+"build"
+]
+}
