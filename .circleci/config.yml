@@ -11,8 +11,5 @@
       "run: mvn package"
     ]
       }
-      },
-"workflows": [
-"build"
-]
+      }
 }
