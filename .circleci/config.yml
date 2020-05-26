@@ -4,6 +4,6 @@ build:
   jobs:
     docker:
       - image: circleci/openjdk:11-jdk-stretch
-  steps:
-    - checkout
-    -run: mvn package
+    steps:
+      - checkout
+      -run: mvn package
