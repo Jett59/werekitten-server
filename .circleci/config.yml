@@ -1,17 +1,10 @@
-{
-"version": "2.1",
+version: 2.1
 
-"workflows": {
-"build": {
-  "jobs": {
-    "docker": [
-      "image": "circleci/openjdk:11-jdk-stretch"
-      ],
-    "steps": [
-      "checkout",
-      "run: mvn package"
-    ]
-      }
-      }
-}
-}
+jobs:
+  build: 
+    docker:
+      - image: circleci/openjdk:11-jdk-stretch
+    steps:
+      - checkout
+
+      - run: mvn package
