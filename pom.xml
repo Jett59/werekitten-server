@@ -58,6 +58,29 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <id>pack</id>
+                        <phase>package</phase>
+                        <configuration>
+                            <target>
+                                <zip destfile="${project.build.directory}/release-directory/${project.build.finalName}.zip">
+                                    <zipfileset dir="${project.build.directory}/release-directory" includes="lib/**" />
+                                    <zipfileset dir="${project.build.directory}/release-directory" includes="${project.build.finalName}.jar" />
+                                    <zipfileset dir="${basedir}" includes="readme.txt" />
+                                </zip>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
   </plugins>
   </build>
 </project>
