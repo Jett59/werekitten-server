@@ -68,7 +68,7 @@
                         <phase>package</phase>
                         <configuration>
                             <target>
-                                <zip destfile="${project.build.directory}/release-directory/${project.build.finalName}.zip">
+                                <zip destfile="${project.build.directory}/release-directory/werekitten-server.zip">
                                     <zipfileset dir="${project.build.directory}/release-directory" includes="lib/**" />
                                     <zipfileset dir="${project.build.directory}/release-directory" includes="${project.build.finalName}.jar" />
                                     <zipfileset dir="${basedir}" includes="readme.txt" />
