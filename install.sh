@@ -8,5 +8,5 @@ unzip /home/ec2-user/werekitten-server.zip
 chmod +x shutdown.sh
 ./shutdown.sh
 chmod +x startup.sh
-nohup ./startup.sh &
+./startup.sh
 
