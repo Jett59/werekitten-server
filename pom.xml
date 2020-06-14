@@ -1,18 +1,19 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.mycodefu</groupId>
-  <artifactId>werekitten-server</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  
-  <properties>
-  <maven.compiler.target>11</maven.compiler.target>
-  <maven.compiler.source>11</maven.compiler.source>
-  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  <netty.version>4.1.44.Final</netty.version>
-  </properties>
-  
-  <dependencies>
-  <dependency>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.mycodefu</groupId>
+    <artifactId>werekitten-server</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <netty.version>4.1.44.Final</netty.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-common</artifactId>
             <version>${netty.version}</version>
@@ -22,11 +23,12 @@
             <artifactId>netty-codec-http</artifactId>
             <version>${netty.version}</version>
         </dependency>
-  </dependencies>
-  
-  <build>
-  <plugins>
-  <plugin>
+    </dependencies>
+
+    <build>
+        <finalName>werekitten-server</finalName>
+        <plugins>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.1.2</version>
@@ -41,7 +43,7 @@
                     </archive>
                 </configuration>
             </plugin>
-  <plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
@@ -69,9 +71,11 @@
                         <configuration>
                             <target>
                                 <zip destfile="${project.build.directory}/release-directory/werekitten-server.zip">
-                                    <zipfileset dir="${project.build.directory}/release-directory" includes="lib/**" />
-                                    <zipfileset dir="${project.build.directory}/release-directory" includes="${project.build.finalName}.jar" />
-                                    <zipfileset dir="${basedir}" includes="readme.txt" />
+                                    <zipfileset dir="${project.basedir}/server-setup" includes="**"/>
+                                    <zipfileset dir="${project.build.directory}/release-directory" includes="lib/**"/>
+                                    <zipfileset dir="${project.build.directory}/release-directory"
+                                                includes="${project.build.finalName}.jar"/>
+                                    <zipfileset dir="${basedir}" includes="readme.txt"/>
                                 </zip>
                             </target>
                         </configuration>
@@ -81,6 +85,6 @@
                     </execution>
                 </executions>
             </plugin>
-  </plugins>
-  </build>
+        </plugins>
+    </build>
 </project>
