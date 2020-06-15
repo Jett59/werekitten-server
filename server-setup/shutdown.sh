@@ -1,2 +1,2 @@
 #!/bin/sh
-killall -u java -s 2
+killall java -s 2
