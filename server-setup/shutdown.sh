@@ -1,2 +1,2 @@
 #!/bin/sh
-killall -u werekitten -s 2
+killall -u java -s 2
