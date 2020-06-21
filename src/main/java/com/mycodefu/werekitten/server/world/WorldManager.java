@@ -8,7 +8,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.mycodefu.werekitten.server.netty.NettyServer;
 import com.mycodefu.werekitten.server.netty.NettyServerHandler;
-
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelId;
 import io.netty.util.CharsetUtil;
@@ -53,6 +52,7 @@ private byte[] bytes;
 			channelToWorld.put(id, hostNameToWorld.get(hostName));
 			System.out.println("player joining world");
 		}else {
+			System.err.println("error: unknown message "+message.getByte(0)+", expected host (65) or join (66)");
 			throw new IllegalArgumentException("unknown message passed by connection "+sourceIpAddress);
 		}
 	}else {
