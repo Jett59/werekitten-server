@@ -87,11 +87,16 @@ public class NettyServer {
     }
 
     public void sendMessage(ChannelId id, ByteBuf message) {
-        Channel channel = allChannels.find(id);
-        if (channel != null) {
-        	System.out.println(message.readableBytes());
-            WebSocketFrame frame = new BinaryWebSocketFrame(message);
-            channel.writeAndFlush(frame);
+        try {
+            Channel channel = allChannels.find(id);
+            if (channel != null) {
+                ByteBuf outboundMessage = message.copy();
+                WebSocketFrame frame = new BinaryWebSocketFrame(outboundMessage);
+                channel.writeAndFlush(frame);
+            }
+        } catch (Exception e) {
+            System.out.printf("Unable to find the channel %s to send message to.\n", id.asShortText());
+            e.printStackTrace();
         }
     }
     
