@@ -6,4 +6,5 @@ jobs:
       - image: circleci/openjdk:11-jdk-stretch
     steps:
       - checkout
+      - setup_remote_docker
       - run: ./deploy.sh
