@@ -1,5 +1,6 @@
 echo "Building the deployable artifact ./target/release-directory/werekitten-server.zip"
 mvn package
+docker build --tag werekitten-server .
 
 echo "${SERVER_PEM}" | base64 --decode > server.pem
 chmod 400 server.pem
